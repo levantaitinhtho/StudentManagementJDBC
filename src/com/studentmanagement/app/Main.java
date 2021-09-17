@@ -2,6 +2,8 @@ package com.studentmanagement.app;
 
 import com.studentmanagement.dao.StudentDao;
 import com.studentmanagement.entity.Student;
+import com.studentmanagement.service.ClassService;
+import com.studentmanagement.service.ServiceConnection;
 import com.studentmanagement.service.StudentService;
 
 import java.sql.SQLException;
@@ -12,10 +14,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
+    private static final ServiceConnection ser = new ServiceConnection();
+    private static  final ClassService classService = new ClassService();
     private static final StudentService studentService = new StudentService();
     private static final Scanner scanner = new Scanner(System.in);
-    private static final StudentDao studentDao = new StudentDao();
     public static void main(String[] args) throws SQLException {
         System.out.println("Welcome Student management system!");
         showMenu();
@@ -70,6 +72,26 @@ public class Main {
                     studentService.maxScore();
                     break;
                 case 16:
+                    classService.findByIDClass();
+                    break;
+                case 17:
+                    classService.FindAll();
+                    break;
+                case 18:
+                    ser.addFullDatabase();
+                    break;
+                case 19:
+                    classService.addInfoClass();
+                    break;
+                case 20:
+                    classService.findByMajor();
+                case 21:
+                    ser.averageBasedOnClass();
+                    break;
+                case 22:
+                    ser.studentNumberClass();
+                    break;
+                case 23:
                     System.out.println("Good bye.");
                     return;
                 default:
@@ -94,6 +116,14 @@ public class Main {
         System.out.println("13.Update All Score In Database");
         System.out.println("14.Sort Date Based On Score");
         System.out.println("15. Display Max Score Of Student");
-        System.out.println("16. Exits Program");
+        System.out.println("-----------------------");
+        System.out.println("16.Find Based On ID In Class");
+        System.out.println("17.Show Information Class");
+        System.out.println("18.Add Full Database");
+        System.out.println("19.Add Information Of Class");
+        System.out.println("20. Search Class Based On Major");
+        System.out.println("21. Average Based On Class");
+        System.out.println("22.Number Student Based On Class Name");
+        System.out.println("23. Exits Program");
     }
 }

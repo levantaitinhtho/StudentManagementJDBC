@@ -173,7 +173,8 @@ public class StudentService {
     public void averageScoreStudent(){
         System.out.println("-------------------");
         try {
-            studentDao.averageScoreStudent();
+           double student = studentDao.averageScoreStudent();
+            System.out.println(student);
         } catch (SQLException sqlException) {
             System.err.println("Error: "+sqlException.getMessage());
         }
@@ -213,9 +214,6 @@ public class StudentService {
             String dob = scanner.nextLine();
             LocalDate localDate = LocalDate.parse(dob);
             student.setDob(localDate);
-            System.out.println("Enter Major:");
-            String major = scanner.nextLine();
-            student.setMajor(major);
             studentDao.modifyDataStudent(student);
         }catch (Exception exception){
             System.err.println("Error: "+ exception.getMessage());

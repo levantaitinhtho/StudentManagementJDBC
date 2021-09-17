@@ -38,7 +38,7 @@ public class StudentDao {
         String query = "insert into student(id,first_name,last_name,city,average_score,gender,dob) values ("
                 + student.getID() + ",'" + student.getFirstName() + "', '" + student.getLastName() + "', '" +
                 student.getCity() + "', " + student.getAverageScore() + ", '" + student.getGender() + "', '" +
-                dob + "', '"+student.getMajor()+"')";
+                dob +"')";
         Statement statement = getConnection().createStatement();
         int result = statement.executeUpdate(query);
         if(result != 0)  {
@@ -155,27 +155,27 @@ public class StudentDao {
         Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         List<Student> studentList = new ArrayList<>();
-        if(resultSet.next()){
+        while(resultSet.next()){
             Student student = new Student();
             studentList.add(student);
         }
         return studentList;
     }
 
-    public boolean averageScoreStudent() throws  SQLException{
+    public Double averageScoreStudent() throws  SQLException{
         String query = "SELECT AVG(average_score) as AVERAGE from Student";
         Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        if(resultSet.next()){
+        while(resultSet.next()){
             System.out.println("Average Score Is");
-            System.out.println(resultSet.getString(1));
-            return true;
+            double mediumScore = resultSet.getDouble(1);
+            return mediumScore;
         }
-        return false;
+        return null;
     }
     public boolean modifyDataStudent(Student student) throws SQLException{
        String query = "UPDATE Student SET last_name ='"+student.getLastName()+"', first_name ='"+student.getFirstName()+"',city ='"+student.getCity()+"', average_score ="+student.getAverageScore()+",gender='"+student.getGender()+
-               "', dob='"+student.getDob()+"', major='"+student.getMajor()+"'"+" WHERE ID="+student.getID(); ;
+               "', dob='"+student.getDob()+"'"+" WHERE ID="+student.getID(); ;
         Statement statement = getConnection().createStatement();
         int resultSet = statement.executeUpdate(query);
         if(resultSet != 0){

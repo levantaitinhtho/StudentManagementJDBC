@@ -1,5 +1,7 @@
 package com.studentmanagement.entity;
 
+import com.studentmanagement.dao.ClassDao;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,7 +17,7 @@ public class Student {
     private double averageScore;
     private char gender;
     private LocalDate dob;
-    private String major;
+    private Class classStudent;
 
     public Student() {
     }
@@ -29,7 +31,11 @@ public class Student {
         String dobString = resultSet.getString("dob");
         LocalDate dob = LocalDate.parse(dobString, DateTimeFormatter.ISO_LOCAL_DATE);
         this.dob = dob;
-        this.major = resultSet.getString("major");
+
+        int classID = resultSet.getInt("class_id");
+        ClassDao classDao = new ClassDao();
+        Class classs = classDao.findByIDClass(classID);
+        this.setClassStudent(classs);
     }
 
     @Override
@@ -112,12 +118,13 @@ public class Student {
         return null;
     }
 
-    public String getMajor() {
-        return major;
+
+    public Class getClassStudent() {
+        return classStudent;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setClassStudent(Class classStudent) {
+        this.classStudent = classStudent;
     }
 
     @Override
@@ -127,9 +134,11 @@ public class Student {
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", city='" + city + '\'' +
-                ", avergaeScore=" + averageScore +
+                ", averageScore=" + averageScore +
                 ", gender=" + gender +
                 ", dob=" + dob +
+                ", ClassName="+classStudent.getClassName()+
+                ",Major="+classStudent.getMajor()+
                 ']';
     }
 }
